@@ -1,0 +1,52 @@
+@import '../../scss/mixins.scss';
+.header {
+  background-color: var(--background-color-base);
+}
+
+.headerInner {
+  max-width: 1440px;
+  min-height: 80px;
+  margin: 0 auto;
+  padding: 0 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 0;
+  &:hover {
+    @include shadow-2;
+  }
+}
+
+.nav {
+  display: flex;
+  column-gap: 27px;
+  align-items: center;
+  & > a {
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+.signIn {
+  @include header-6;
+  border: none;
+  background-color: transparent;
+  color: var(--heading-color);
+}
+
+.signUp {
+  @include header-6;
+  border: 1px solid var(--success-color);
+  background-color: transparent;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 18px;
+  color: var(--success-color);
+}

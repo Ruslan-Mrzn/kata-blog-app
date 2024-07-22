@@ -1,0 +1,110 @@
+@import '../../scss/mixins.scss';
+article {
+  width: 100%;
+  min-height: 140px;
+  padding: 15px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: var(--background-color-base);
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  @include shadow-2;
+}
+
+.main {
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  flex-shrink: 2;
+}
+
+.user {
+  min-width: 150px;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  @include header-5;
+  color: var(--info-color);
+  font-weight: inherit;
+  margin-right: 13px;
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.inactiveLike {
+  @include like;
+  background-image: url('./inactive-like.svg');
+}
+
+.likesCount {
+  @include small-text;
+  color: var(--text-color);
+  margin-left: 5px;
+}
+
+.tagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 8px;
+}
+
+.tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  padding: 0 5px;
+  border: 1px solid var(--text-color-secondary);
+  border-radius: 2px;
+  color: var(--text-color-secondary);
+  @include small-text;
+}
+
+.description {
+  @include small-text;
+  color: var(--text-color);
+  padding-right: 15px;
+}
+
+.user {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 12px;
+}
+
+.userTextBlock {
+  display: flex;
+  flex-direction: column;
+  row-gap: -5px;
+}
+
+.userName {
+  @include header-6;
+  color: var(--heading-color);
+  text-align: right;
+}
+
+.date {
+  @include small-text;
+  color: var(--text-color-secondary);
+  text-align: right;
+}
+
+.userAvatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+.userPhoto {
+  object-fit: cover;
+}

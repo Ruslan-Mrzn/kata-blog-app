@@ -1,0 +1,67 @@
+@mixin small-text {
+  font-size: 12px;
+  line-height: 22px;
+}
+
+@mixin base-text {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+@mixin large-text {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+@mixin header-6 {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+@mixin header-5 {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+@mixin header-4 {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+@mixin header-3 {
+  font-size: 30px;
+  line-height: 36px;
+}
+
+@mixin header-2 {
+  font-size: 56px;
+  line-height: 64px;
+}
+
+@mixin header-1 {
+  font-size: 44px;
+  line-height: 76px;
+}
+
+@mixin shadow-2 {
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+}
+
+@mixin shadow-1 {
+  box-shadow:
+    0 1px 3px 0 var(--table-header),
+    0 1px 7px 0 rgba(0, 0, 0, 0.03),
+    0 3px 13px 0 rgba(0, 0, 0, 0.04),
+    0 5px 24px 0 rgba(0, 0, 0, 0.04),
+    0 9px 44px 0 rgba(0, 0, 0, 0.05),
+    0 22px 106px 0 rgba(0, 0, 0, 0.07);
+}
+
+@mixin like {
+  width: 15px;
+  height: 15px;
+  border: none;
+  background-color: transparent;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
