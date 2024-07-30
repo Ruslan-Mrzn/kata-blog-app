@@ -1,0 +1,5 @@
+const SET_CURRENT_ARTICLE = 'SET_CURRENT_ARTICLE'
+
+export default {
+  SET_CURRENT_ARTICLE,
+}

@@ -1,5 +1,6 @@
 @import '../../scss/mixins.scss';
 article {
+  max-width: 940px;
   width: 100%;
   min-height: 140px;
   padding: 15px;
@@ -7,17 +8,22 @@ article {
   border-bottom-right-radius: 5px;
   background-color: var(--background-color-base);
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 25px;
   justify-content: space-between;
   align-items: start;
   @include shadow-2;
+  margin-top: 26px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .main {
-  max-width: 680px;
+  max-width: 70%;
   display: flex;
   flex-direction: column;
   row-gap: 4px;
-  flex-shrink: 2;
+  flex-shrink: 3;
 }
 
 .user {
@@ -103,8 +109,42 @@ article {
   width: 46px;
   height: 46px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
-.userPhoto {
-  object-fit: cover;
+.fullArticle {
+  width: 100%;
+  min-height: 60vh;
+  font-family: var(--main-font);
+  font-size: 14px;
+  line-height: 157%;
+  color: var(--text-color);
+  & * {
+    word-break: break-all;
+    text-wrap: balance;
+  }
+
+  & p,
+  ul,
+  ol {
+    margin-bottom: 20px;
+  }
+
+  & h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 400;
+  }
+
+  & h1 {
+    font-size: 20px;
+    line-height: 140%;
+  }
+  & h2 {
+    font-size: 18px;
+    line-height: 140%;
+  }
 }

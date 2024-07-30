@@ -1,36 +1,52 @@
 import React from 'react'
-import { Link } from 'react-router-dom/cjs/react-router-dom'
+import { Link, useLocation } from 'react-router-dom/cjs/react-router-dom'
+import { format } from 'date-fns'
+import markdownit from 'markdown-it'
+import { useDispatch } from 'react-redux'
+
+import fetchCurrentArticle from '../../redux-store/asyncActions/fetchCurrentArticle'
 
 import styles from './Article.module.scss'
 
-const Article = () => {
+const Article = ({ slug, title, description, body, createdAt, tagList, favoritesCount, author }) => {
+  const dispatch = useDispatch()
+  const md = markdownit()
+  const result = md.render(`${body}`)
+  const { pathname } = useLocation()
   return (
     <article>
       <div className={styles.main}>
         <div className={styles.titleContainer}>
-          <Link className={styles.title}>Some article title</Link>
+          <Link onClick={() => dispatch(fetchCurrentArticle(slug))} to={`/articles/${slug}`} className={styles.title}>
+            {title}
+          </Link>
           <button className={styles.inactiveLike} type="button"></button>
-          <span className={styles.likesCount}>12</span>
+          <span className={styles.likesCount}>{favoritesCount}</span>
         </div>
         <ul className={styles.tagsContainer}>
-          <li className={styles.tag}>Tag 1</li>
-          <li className={styles.tag}>Tag 2</li>
+          {tagList.map((tag, index) => {
+            return (
+              tag && (
+                <li key={index} className={styles.tag}>
+                  {tag}
+                </li>
+              )
+            )
+          })}
         </ul>
-        <p className={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.
-        </p>
+        <p className={styles.description}>{description}</p>
       </div>
       <div className={styles.user}>
         <div className={styles.userTextBlock}>
-          <p className={styles.userName}>John Doe</p>
-          <p className={styles.date}>March 5, 2020 </p>
+          <p className={styles.userName}>{author.username}</p>
+          <p className={styles.date}>{format(createdAt, 'MMMM d, yyyy')}</p>
         </div>
-        <div className={styles.userAvatar}>
-          <img className={styles.userPhoto} />
-        </div>
+
+        <img className={styles.userAvatar} src={author.image} />
       </div>
+      {pathname === `/articles/${slug}` && (
+        <section className={styles.fullArticle} dangerouslySetInnerHTML={{ __html: result }}></section>
+      )}
     </article>
   )
 }
