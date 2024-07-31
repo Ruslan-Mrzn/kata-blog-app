@@ -1,10 +1,10 @@
 import api from '../../utils/api'
 import articleActions from '../actions/articlesActions'
 
-const fetchArticles = () => {
+const fetchArticles = (pageNumber = 1) => {
   return async (dispatch) => {
-    const { articles } = await api.getArticles()
-    dispatch(articleActions.getArticles(articles))
+    const { articles, articlesCount } = await api.getArticles(pageNumber)
+    dispatch(articleActions.getArticles({ articles, articlesCount }))
     console.log(articles)
   }
 }

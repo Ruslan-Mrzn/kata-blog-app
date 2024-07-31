@@ -11,8 +11,8 @@ class Api {
     return Promise.reject(res)
   }
 
-  getArticles() {
-    return fetch(`${this._baseUrl}/articles`, {
+  getArticles(pageNumber) {
+    return fetch(`${this._baseUrl}/articles?offset=${(pageNumber - 1) * 20} `, {
       method: 'GET',
       headers: {
         ...this._headers,

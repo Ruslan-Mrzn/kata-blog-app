@@ -1,1 +1,3 @@
-export const articles = (state) => state.articles
+export const articles = (state) => state.articles.articles
+
+export const totalArticlesCount = (state) => state.articles.articlesCount
