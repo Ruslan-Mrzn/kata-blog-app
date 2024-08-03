@@ -50,3 +50,45 @@
   padding: 0 18px;
   color: var(--success-color);
 }
+
+.createArticle {
+  padding: 10px 6px;
+  color: var(--success-color);
+  border: 1px solid var(--success-color);
+  border-radius: 5px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  column-gap: 13px;
+}
+
+.userAvatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userName {
+  @include header-6;
+  color: var(--heading-color);
+  text-align: right;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.logOut {
+  @include header-6;
+  border: 1px solid var(--text-color);
+  background-color: transparent;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 18px;
+  color: var(--text-color);
+}

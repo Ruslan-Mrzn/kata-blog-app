@@ -6,19 +6,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import Header from '../Header/Header'
 import ArticlesList from '../ArticlesList/ArticlesList'
 import fetchArticles from '../../redux-store/asyncActions/fetchArticles'
-import { currentArticleSelectors, articlesSelectors } from '../../redux-store/selectors/index.js'
+import { currentArticleSelectors, articlesSelectors, currentUserSelectors } from '../../redux-store/selectors/index.js'
 import Article from '../Article/Article.js'
+import SignUpForm from '../SingUpForm/SingUpForm.js'
+import SignInForm from '../SignInForm/SingInForm.js'
 
 const App = () => {
   const [current, setCurrent] = useState(1)
   const { slug, title, description, body, tagList, createdAt, favoritesCount, author } = useSelector(
     currentArticleSelectors.currentArticle
   )
+  const { token } = useSelector(currentUserSelectors.currentUser)
   const totalArticlesCount = useSelector(articlesSelectors.totalArticlesCount)
   const { pathname } = useLocation()
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchArticles())
+    dispatch(fetchArticles(undefined, token))
   }, [])
   return (
     <>
@@ -53,6 +56,8 @@ const App = () => {
           tagList={tagList}
         />
       )}
+      {pathname === '/sign-up' && <SignUpForm />}
+      {pathname === '/sign-in' && <SignInForm />}
     </>
   )
 }

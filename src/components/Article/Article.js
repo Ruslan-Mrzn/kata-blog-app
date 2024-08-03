@@ -2,13 +2,15 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom/cjs/react-router-dom'
 import { format } from 'date-fns'
 import markdownit from 'markdown-it'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { currentUserSelectors } from '../../redux-store/selectors'
 import fetchCurrentArticle from '../../redux-store/asyncActions/fetchCurrentArticle'
 
 import styles from './Article.module.scss'
 
 const Article = ({ slug, title, description, body, createdAt, tagList, favoritesCount, author }) => {
+  const { token } = useSelector(currentUserSelectors.currentUser)
   const dispatch = useDispatch()
   const md = markdownit()
   const result = md.render(`${body}`)
@@ -17,7 +19,11 @@ const Article = ({ slug, title, description, body, createdAt, tagList, favorites
     <article>
       <div className={styles.main}>
         <div className={styles.titleContainer}>
-          <Link onClick={() => dispatch(fetchCurrentArticle(slug))} to={`/articles/${slug}`} className={styles.title}>
+          <Link
+            onClick={() => dispatch(fetchCurrentArticle(slug, token))}
+            to={`/articles/${slug}`}
+            className={styles.title}
+          >
             {title}
           </Link>
           <button className={styles.inactiveLike} type="button"></button>

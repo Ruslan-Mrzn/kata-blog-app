@@ -1,0 +1,176 @@
+@import '../../scss/mixins.scss';
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 21px;
+  margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 48px 32px;
+  width: 385px;
+  min-height: 600px;
+  background-color: var(--background-color-base);
+  border-radius: 6px;
+  @include shadow-1;
+}
+
+.title {
+  font-family: var(--secondary-font);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 140%;
+  text-align: center;
+  color: #262626;
+}
+
+.inputsContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.inputTitle {
+  font-family: var(--secondary-font);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 157%;
+  color: #262626;
+}
+
+.inputArea {
+  height: 40px;
+  width: 100%;
+  padding: 0 12px;
+  font-family: var(--secondary-font);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--text-color);
+  border: 1px solid var(--normal-color);
+  border-radius: 4px;
+  &::placeholder {
+    font-family: var(--second-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: #bfbfbf;
+  }
+}
+
+.inputInvalid {
+  border-color: var(--error-color);
+  &:focus {
+    outline: 1px solid var(--error-color);
+  }
+  & + p {
+    font-family: var(--secondary-font);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 157%;
+    color: var(--error-color);
+  }
+}
+
+.label {
+  display: flex;
+  column-gap: 8px;
+  width: 100%;
+  cursor: pointer;
+  border-top: 1px solid #e8e8e8;
+  padding-top: 8px;
+
+  transition: all 0.3s ease;
+}
+
+.checkbox {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+
+  & + .decor {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    border: 1px solid var(--primary-color);
+    border-radius: 2px;
+    pointer-events: none;
+    transition:
+      background-color,
+      opacity 0.3s ease;
+  }
+  &:hover ~ .decor {
+    opacity: 0.7;
+  }
+  &:checked + .decor {
+    background-image: url('./check.svg');
+    background-repeat: no-repeat;
+    background-size: 12px 8px;
+    background-position: center;
+    background-color: var(--primary-color);
+  }
+}
+
+.agree {
+  font-family: var(--secondary-font);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 157%;
+  color: #595959;
+}
+
+.submit {
+  border: none;
+  height: 40px;
+  width: 100%;
+  border-radius: 4px;
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  font-family: var(--second-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--background-color-base);
+  transition: all 0.3s ease;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  &:disabled {
+    background-color: var(--background-color-base);
+    cursor: progress;
+  }
+}
+
+.toSignIn {
+  margin-top: -13px;
+  text-align: center;
+  font-family: var(--second-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 167%;
+  text-align: center;
+  color: #8c8c8c;
+  & a {
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}

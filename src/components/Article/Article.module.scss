@@ -120,14 +120,18 @@ article {
   line-height: 157%;
   color: var(--text-color);
   & * {
-    word-break: break-all;
-    text-wrap: balance;
+    word-break: keep-all;
+    text-wrap: pretty;
   }
-
   & p,
   ul,
   ol {
     margin-bottom: 20px;
+  }
+
+  & ul,
+  ol {
+    list-style: inside;
   }
 
   & h1,

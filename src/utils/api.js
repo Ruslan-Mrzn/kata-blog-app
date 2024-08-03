@@ -11,21 +11,31 @@ class Api {
     return Promise.reject(res)
   }
 
-  getArticles(pageNumber) {
+  getArticles(pageNumber, token) {
     return fetch(`${this._baseUrl}/articles?offset=${(pageNumber - 1) * 20} `, {
       method: 'GET',
       headers: {
         ...this._headers,
+        Authorization: `Bearer ${token}`,
       },
     }).then(this._checkResponse)
   }
 
-  getSingleArticle(slug) {
+  getSingleArticle(slug, token) {
     return fetch(`${this._baseUrl}/articles/${slug}`, {
       method: 'GET',
       headers: {
         ...this._headers,
+        Authorization: `Bearer ${token}`,
       },
+    }).then(this._checkResponse)
+  }
+
+  registerNewUser(username, email, password) {
+    return fetch(`${this._baseUrl}/users`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({ user: { username, email, password } }),
     }).then(this._checkResponse)
   }
 
