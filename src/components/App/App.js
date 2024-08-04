@@ -12,6 +12,7 @@ import api from '../../utils/api.js'
 import Article from '../Article/Article.js'
 import SignUpForm from '../SingUpForm/SingUpForm.js'
 import SignInForm from '../SignInForm/SingInForm.js'
+import EditProfileForm from '../EditProfileForm/EditProfileForm.js'
 
 const App = () => {
   const [current, setCurrent] = useState(1)
@@ -69,6 +70,7 @@ const App = () => {
       )}
       {pathname === '/sign-up' && <SignUpForm />}
       {pathname === '/sign-in' && <SignInForm />}
+      {pathname === '/profile' && <EditProfileForm />}
     </>
   )
 }

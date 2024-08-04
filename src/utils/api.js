@@ -47,46 +47,15 @@ class Api {
     }).then(this._checkResponse)
   }
 
-  getRatedMovies(guestId) {
-    return fetch(`${this._baseUrl}guest_session/${guestId}/rated/movies`, {
-      method: 'GET',
-      headers: this._headers,
-    }).then(this._checkResponse)
-  }
-
-  getRatedMoviesFromPage(guestId, pageNumber) {
-    return fetch(`${this._baseUrl}guest_session/${guestId}/rated/movies?page=${pageNumber}`, {
-      method: 'GET',
-      headers: this._headers,
-    }).then(this._checkResponse)
-  }
-
-  getSearchedMovies(query) {
-    return fetch(`${this._baseUrl}search/movie?query=${query}`, {
-      method: 'GET',
-      headers: this._headers,
-    }).then(this._checkResponse)
-  }
-
-  getPaginationMovies(query, pageNumber) {
-    return fetch(`${this._baseUrl}search/movie?query=${query}&page=${pageNumber}`, {
-      method: 'GET',
-      headers: this._headers,
-    }).then(this._checkResponse)
-  }
-
-  getGenres() {
-    return fetch(`${this._baseUrl}genre/movie/list`, {
-      method: 'GET',
-      headers: this._headers,
-    }).then(this._checkResponse)
-  }
-
-  addRating(movieId, guestId, value) {
-    return fetch(`${this._baseUrl}movie/${movieId}/rating?guest_session_id=${guestId}`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify({ value: value }),
+  editUserProfile(data, token) {
+    console.log(data)
+    return fetch(`${this._baseUrl}/user`, {
+      method: 'PUT',
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ user: data }),
     }).then(this._checkResponse)
   }
 }
