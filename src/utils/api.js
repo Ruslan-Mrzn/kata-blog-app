@@ -39,6 +39,14 @@ class Api {
     }).then(this._checkResponse)
   }
 
+  logInUser(email, password) {
+    return fetch(`${this._baseUrl}/users/login`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({ user: { email, password } }),
+    }).then(this._checkResponse)
+  }
+
   getRatedMovies(guestId) {
     return fetch(`${this._baseUrl}guest_session/${guestId}/rated/movies`, {
       method: 'GET',

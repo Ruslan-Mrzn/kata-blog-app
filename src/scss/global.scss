@@ -40,8 +40,14 @@ body {
   background-color: var(--background);
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .ant-pagination {
-  margin-top: 26px;
+  margin-top: auto;
   display: flex;
   column-gap: 10px;
   justify-content: center;

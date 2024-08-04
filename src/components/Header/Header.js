@@ -1,14 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { currentUserSelectors } from '../../redux-store/selectors'
+import userActions from '../../redux-store/actions/userActions'
 
 import styles from './Header.module.scss'
 import Logo from './Logo.svg'
 
 const Header = () => {
   const { username, image } = useSelector(currentUserSelectors.currentUser)
+  const dispatch = useDispatch()
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
@@ -40,7 +42,23 @@ const Header = () => {
             </div>
           )}
           {username && (
-            <Link className={styles.logOut} to="/">
+            <Link
+              onClick={() => {
+                dispatch(
+                  userActions.setUser({
+                    bio: null,
+                    email: null,
+                    image:
+                      'https://img.freepik.com/premium-vector/anonymous-hooded-avatar-hidden-user-incognito-hacker-isolated-vector-illustration_619989-1263.jpg',
+                    token: null,
+                    username: null,
+                  })
+                )
+                sessionStorage.removeItem('realWorldBlogUser')
+              }}
+              className={styles.logOut}
+              to="/"
+            >
               Log Out
             </Link>
           )}

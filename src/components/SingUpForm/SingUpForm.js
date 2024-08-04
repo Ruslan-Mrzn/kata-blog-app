@@ -12,6 +12,7 @@ import styles from './SingUpForm.module.scss'
 
 const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const [serverErrors, setServerErrors] = useState({})
   const { token } = useSelector(currentUserSelectors.currentUser)
   const dispatch = useDispatch()
   const {
@@ -35,7 +36,7 @@ const SignUpForm = () => {
               sessionStorage.setItem('realWorldBlogUser', JSON.stringify(user))
               reset()
             } catch (error) {
-              console.error(error)
+              error.json().then(({ errors }) => setServerErrors(errors))
             } finally {
               setIsLoading(false)
             }
@@ -46,30 +47,68 @@ const SignUpForm = () => {
             <div className={styles.input}>
               <h2 className={styles.inputTitle}>Username</h2>
               <input
-                {...register('username', { required: true })}
-                className={`${styles.inputArea} ${errors.username && styles.inputInvalid}`}
+                {...register('username', {
+                  required: true,
+                  minLength: 3,
+                  maxLength: 20,
+                  onChange: () => {
+                    setServerErrors({ ...serverErrors, username: '' })
+                  },
+                })}
+                className={`${styles.inputArea} ${(errors.username || serverErrors.username) && styles.inputInvalid}`}
                 placeholder="Username"
               />
-              {errors.username && <p>First name is required.</p>}
+              {errors.username && errors.username.type === 'required' && <p>Username is required.</p>}
+              {errors.username && errors.username.type === 'minLength' && (
+                <p>Username must be at least 3 characters.</p>
+              )}
+              {errors.username && errors.username.type === 'maxLength' && (
+                <p>Username must be no more than 20 characters.</p>
+              )}
+
+              {serverErrors.username && <p>{serverErrors.username}</p>}
             </div>
             <div className={styles.input}>
               <h2 className={styles.inputTitle}>Email address</h2>
               <input
-                {...register('email', { required: true, pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })}
-                className={`${styles.inputArea} ${errors.email && styles.inputInvalid}`}
+                {...register('email', {
+                  required: true,
+                  pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                  onChange: () => {
+                    setServerErrors({ ...serverErrors, email: '' })
+                  },
+                })}
+                className={`${styles.inputArea} ${(errors.email || serverErrors.email) && styles.inputInvalid}`}
                 placeholder="Email address"
               />
               {errors.email && <p>Please, input correct Email address</p>}
+              {serverErrors.email && <p>{serverErrors.email}</p>}
             </div>
             <div className={styles.input}>
               <h2 className={styles.inputTitle}>Password</h2>
               <input
-                {...register('password', { required: true, minLength: 6, maxLength: 40 })}
+                {...register('password', {
+                  required: true,
+                  minLength: 6,
+                  maxLength: 40,
+                  onChange: () => {
+                    setServerErrors({ ...serverErrors, password: '' })
+                  },
+                })}
                 type="password"
-                className={`${styles.inputArea} ${errors.password && styles.inputInvalid}`}
+                className={`${styles.inputArea} ${(errors.password || serverErrors.password) && styles.inputInvalid}`}
                 placeholder="Password"
               />
-              {errors.password && <p>Your password needs to be at least 6 characters.</p>}
+              {errors.password && errors.password.type === 'required' && <p>Password is required.</p>}
+
+              {errors.password && errors.password.type === 'minLength' && (
+                <p>Your password needs to be at least 6 characters.</p>
+              )}
+              {errors.password && errors.password.type === 'maxLength' && (
+                <p>Your password needs to be less than 40 characters.</p>
+              )}
+
+              {serverErrors.password && <p>{serverErrors.password}</p>}
             </div>
             <div className={styles.input}>
               <h2 className={styles.inputTitle}>Repeat Password</h2>
@@ -95,7 +134,7 @@ const SignUpForm = () => {
             <span className={styles.agree}>I agree to the processing of my personal information</span>
           </label>
 
-          <button disabled={isLoading} className={styles.submit} type="submit">
+          <button disabled={isLoading || errors.agree} className={styles.submit} type="submit">
             {isLoading ? <Spin size="small" /> : 'Create'}
           </button>
 
