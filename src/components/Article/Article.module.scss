@@ -1,5 +1,5 @@
 @import '../../scss/mixins.scss';
-article {
+.article {
   max-width: 940px;
   width: 100%;
   min-height: 140px;
@@ -26,13 +26,10 @@ article {
   flex-shrink: 3;
 }
 
-.user {
-  min-width: 150px;
-}
-
 .titleContainer {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .title {
@@ -82,6 +79,12 @@ article {
 }
 
 .user {
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+}
+
+.userContainer {
   display: flex;
   justify-content: flex-end;
   column-gap: 12px;
@@ -110,6 +113,41 @@ article {
   height: 46px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.buttonsContainer {
+  margin-top: auto;
+  display: flex;
+  justify-content: end;
+  column-gap: 12px;
+}
+
+.deleteArticle {
+  height: 30px;
+  width: 80px;
+  border: 1px solid var(--highlight-color);
+  border-radius: 4px;
+  background-color: transparent;
+  font-family: var(--secondary-font);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--highlight-color);
+}
+
+.editArticle {
+  height: 30px;
+  width: 65px;
+  border: 1px solid var(--success-color);
+  border-radius: 4px;
+  background-color: transparent;
+  font-family: var(--secondary-font);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--success-color);
 }
 
 .fullArticle {

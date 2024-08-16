@@ -48,7 +48,6 @@ class Api {
   }
 
   editUserProfile(data, token) {
-    console.log(data)
     return fetch(`${this._baseUrl}/user`, {
       method: 'PUT',
       headers: {
@@ -57,6 +56,26 @@ class Api {
       },
       body: JSON.stringify({ user: data }),
     }).then(this._checkResponse)
+  }
+
+  addNewArticle(data, token) {
+    return fetch(`${this._baseUrl}/articles`, {
+      method: 'POST',
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ article: data }),
+    }).then(this._checkResponse)
+  }
+  deleteArticle(slug, token) {
+    return fetch(`${this._baseUrl}/articles/${slug}`, {
+      method: 'DELETE',
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
+    })
   }
 }
 

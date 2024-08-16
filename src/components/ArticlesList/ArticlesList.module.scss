@@ -1,6 +1,8 @@
 .list {
   max-width: 940px;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   margin: 0 auto;
 }
