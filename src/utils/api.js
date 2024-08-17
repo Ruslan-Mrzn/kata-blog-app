@@ -77,6 +77,16 @@ class Api {
       },
     })
   }
+  editArticle(data, token, slug) {
+    return fetch(`${this._baseUrl}/articles/${slug}`, {
+      method: 'PUT',
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ article: data }),
+    }).then(this._checkResponse)
+  }
 }
 
 const api = new Api({

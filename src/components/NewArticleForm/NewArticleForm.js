@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { Spin } from 'antd'
-import { Redirect, useHistory } from 'react-router-dom/cjs/react-router-dom'
+import { Redirect, useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom'
 
 import fetchArticles from '../../redux-store/asyncActions/fetchArticles'
 import api from '../../utils/api'
-import { currentUserSelectors } from '../../redux-store/selectors'
+import { currentUserSelectors, currentArticleSelectors } from '../../redux-store/selectors'
 
 import styles from './NewArticleForm.module.scss'
 
@@ -14,6 +14,13 @@ const NewArticleForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [serverErrors, setServerErrors] = useState({})
   const { token } = useSelector(currentUserSelectors.currentUser)
+  const { pathname } = useLocation()
+  const { slug, title, description, body, tagList } = useSelector(currentArticleSelectors.currentArticle)
+  const defaultTags =
+    tagList &&
+    tagList.map((tag) => {
+      return { tag: tag }
+    })
 
   const {
     register,
@@ -23,7 +30,7 @@ const NewArticleForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      tagList: [{ tag: '' }],
+      tagList: pathname.endsWith('/edit') ? defaultTags : [{ tag: '' }],
     },
   })
   const { fields, append, remove } = useFieldArray({
@@ -42,7 +49,11 @@ const NewArticleForm = () => {
             try {
               const tagList = data.tagList.map((tag) => tag.tag)
               const newArticleData = { ...data, tagList: tagList }
-              await api.addNewArticle(newArticleData, token)
+              if (pathname.endsWith('/edit')) {
+                await api.editArticle(newArticleData, token, slug)
+              } else {
+                await api.addNewArticle(newArticleData, token)
+              }
               dispatch(fetchArticles(undefined, token))
               reset()
               history.push('/')
@@ -56,7 +67,7 @@ const NewArticleForm = () => {
             }
           })}
         >
-          <h1 className={styles.title}>Create new article</h1>
+          <h1 className={styles.title}>{pathname.endsWith('/edit') ? 'Edit article' : 'Create new article'}</h1>
           <div className={styles.inputsContainer}>
             <div className={styles.input}>
               <h2 className={styles.inputTitle}>Title</h2>
@@ -69,6 +80,7 @@ const NewArticleForm = () => {
                 })}
                 className={`${styles.inputArea} ${(errors.title || serverErrors.title) && styles.inputInvalid}`}
                 placeholder="Title"
+                defaultValue={pathname.endsWith('/edit') ? title : ''}
               />
               {errors.title && errors.title.type === 'required' && <p>Title is required.</p>}
 
@@ -85,6 +97,7 @@ const NewArticleForm = () => {
                 })}
                 className={`${styles.inputArea} ${(errors.description || serverErrors.description) && styles.inputInvalid}`}
                 placeholder="Short description"
+                defaultValue={pathname.endsWith('/edit') ? description : ''}
               />
               {errors.description && <p>Description is required.</p>}
               {serverErrors.description && <p>{serverErrors.description}</p>}
@@ -100,6 +113,7 @@ const NewArticleForm = () => {
                 })}
                 className={`${styles.inputArea} ${styles.textArea} ${(errors.body || serverErrors.body) && styles.inputInvalid}`}
                 placeholder="Text"
+                defaultValue={pathname.endsWith('/edit') ? body : ''}
               />
               {errors.body && errors.body.type === 'required' && <p>Text is required.</p>}
               {serverErrors.body && <p>{serverErrors.description}</p>}

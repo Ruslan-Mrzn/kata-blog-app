@@ -73,6 +73,7 @@ const App = () => {
       {pathname === '/sign-in' && <SignInForm />}
       {pathname === '/profile' && <EditProfileForm />}
       {pathname === '/new-article' && <NewArticleForm />}
+      {pathname === `/articles/${slug}/edit` && <NewArticleForm />}
     </>
   )
 }

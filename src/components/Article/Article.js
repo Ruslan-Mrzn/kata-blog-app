@@ -66,7 +66,13 @@ const Article = ({ slug, title, description, body, createdAt, tagList, favorites
             >
               Delete
             </button>
-            <button type="button" className={styles.editArticle}>
+            <button
+              type="button"
+              onClick={() => {
+                history.push(`${history.location.pathname}/edit`)
+              }}
+              className={styles.editArticle}
+            >
               Edit
             </button>
           </div>
