@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation, useHistory } from 'react-router-dom/cjs/react-router-dom'
 import { format } from 'date-fns'
 import markdownit from 'markdown-it'
@@ -12,6 +12,7 @@ import api from '../../utils/api'
 import styles from './Article.module.scss'
 
 const Article = ({ slug, title, description, body, createdAt, tagList, favoritesCount, author }) => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false)
   const { token, username } = useSelector(currentUserSelectors.currentUser)
   const dispatch = useDispatch()
   const md = markdownit()
@@ -55,17 +56,33 @@ const Article = ({ slug, title, description, body, createdAt, tagList, favorites
         </div>
         {author.username === username && pathname === `/articles/${slug}` && (
           <div className={styles.buttonsContainer}>
-            <button
-              type="button"
-              onClick={async () => {
-                await api.deleteArticle(slug, token)
-                dispatch(fetchArticles(undefined, token))
-                history.push('/')
-              }}
-              className={styles.deleteArticle}
-            >
-              Delete
-            </button>
+            <div className={styles.deleteArticleContainer}>
+              <button type="button" onClick={() => setIsPopupOpen(true)} className={styles.deleteArticle}>
+                Delete
+              </button>
+              {isPopupOpen && (
+                <div className={styles.deleteArticlePopup}>
+                  <p className={styles.deleteArticlePopupText}>Are you sure to delete this article?</p>
+                  <div className={styles.deleteArticlePopupButtons}>
+                    <button type="button" onClick={() => setIsPopupOpen(false)} className={styles.disagreeButton}>
+                      No
+                    </button>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        await api.deleteArticle(slug, token)
+                        dispatch(fetchArticles(undefined, token))
+                        history.push('/')
+                      }}
+                      className={styles.agreeButton}
+                    >
+                      Yes
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <button
               type="button"
               onClick={() => {
