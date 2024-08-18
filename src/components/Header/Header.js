@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { currentUserSelectors } from '../../redux-store/selectors'
 import userActions from '../../redux-store/actions/userActions'
+import fetchArticles from '../../redux-store/asyncActions/fetchArticles'
 
 import styles from './Header.module.scss'
 import Logo from './Logo.svg'
@@ -54,6 +55,7 @@ const Header = () => {
                     username: null,
                   })
                 )
+                dispatch(fetchArticles(undefined, ''))
                 sessionStorage.removeItem('realWorldBlogUser')
               }}
               className={styles.logOut}

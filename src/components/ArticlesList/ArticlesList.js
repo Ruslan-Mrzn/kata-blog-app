@@ -6,11 +6,11 @@ import Article from '../Article/Article'
 
 import styles from './ArticlesList.module.scss'
 
-const ArticlesList = () => {
+const ArticlesList = ({ currentPage }) => {
   const articles = useSelector(articlesSelectors.articles)
   return (
     <ul className={styles.list}>
-      {articles.map(({ slug, title, description, body, createdAt, favoritesCount, tagList, author }) => {
+      {articles.map(({ slug, title, description, body, createdAt, favoritesCount, tagList, author, favorited }) => {
         return (
           <Article
             key={slug}
@@ -21,6 +21,8 @@ const ArticlesList = () => {
             createdAt={createdAt}
             tagList={tagList}
             author={author}
+            favorited={favorited}
+            currentPage={currentPage}
             favoritesCount={favoritesCount}
           />
         )

@@ -8,6 +8,7 @@ const defaultState = {
   tags: null,
   createdAt: null,
   favoritesCount: null,
+  favorited: null,
   author: null,
 }
 

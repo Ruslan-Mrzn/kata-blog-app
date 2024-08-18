@@ -6,12 +6,24 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { currentUserSelectors } from '../../redux-store/selectors'
 import fetchCurrentArticle from '../../redux-store/asyncActions/fetchCurrentArticle'
+import singleArticleActions from '../../redux-store/actions/singleArticleActions'
 import fetchArticles from '../../redux-store/asyncActions/fetchArticles'
 import api from '../../utils/api'
 
 import styles from './Article.module.scss'
 
-const Article = ({ slug, title, description, body, createdAt, tagList, favoritesCount, author }) => {
+const Article = ({
+  slug,
+  title,
+  description,
+  body,
+  createdAt,
+  tagList,
+  favoritesCount,
+  author,
+  favorited,
+  currentPage,
+}) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const { token, username } = useSelector(currentUserSelectors.currentUser)
   const dispatch = useDispatch()
@@ -30,7 +42,31 @@ const Article = ({ slug, title, description, body, createdAt, tagList, favorites
           >
             {title}
           </Link>
-          <button className={styles.inactiveLike} type="button"></button>
+          <button
+            className={favorited ? styles.activeLike : styles.inactiveLike}
+            onClick={async () => {
+              if (favorited && pathname === `/articles/${slug}`) {
+                const { article } = await api.dislikeArticle(slug, token)
+                dispatch(singleArticleActions.getSingleArticle(article))
+                dispatch(fetchArticles(currentPage, token))
+              }
+              if (!favorited && pathname === `/articles/${slug}`) {
+                const { article } = await api.likeArticle(slug, token)
+                dispatch(singleArticleActions.getSingleArticle(article))
+                dispatch(fetchArticles(currentPage, token))
+              }
+              if (favorited && pathname !== `/articles/${slug}`) {
+                await api.dislikeArticle(slug, token)
+                dispatch(fetchArticles(currentPage, token))
+              }
+              if (!favorited && pathname !== `/articles/${slug}`) {
+                await api.likeArticle(slug, token)
+                dispatch(fetchArticles(currentPage, token))
+              }
+            }}
+            type="button"
+            disabled={!token}
+          ></button>
           <span className={styles.likesCount}>{favoritesCount}</span>
         </div>
         <ul className={styles.tagsContainer}>

@@ -87,6 +87,24 @@ class Api {
       body: JSON.stringify({ article: data }),
     }).then(this._checkResponse)
   }
+  likeArticle(slug, token) {
+    return fetch(`${this._baseUrl}/articles/${slug}/favorite`, {
+      method: 'POST',
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(this._checkResponse)
+  }
+  dislikeArticle(slug, token) {
+    return fetch(`${this._baseUrl}/articles/${slug}/favorite`, {
+      method: 'DELETE',
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(this._checkResponse)
+  }
 }
 
 const api = new Api({

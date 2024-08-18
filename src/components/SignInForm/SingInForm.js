@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Redirect } from 'react-router-dom/cjs/react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,6 +7,7 @@ import { Spin } from 'antd'
 import api from '../../utils/api'
 import userActions from '../../redux-store/actions/userActions'
 import { currentUserSelectors } from '../../redux-store/selectors'
+import fetchArticles from '../../redux-store/asyncActions/fetchArticles'
 
 import styles from './SingInForm.module.scss'
 
@@ -15,6 +16,10 @@ const SignInForm = () => {
   const [serverErrors, setServerErrors] = useState({})
   const { token } = useSelector(currentUserSelectors.currentUser)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchArticles(undefined, token))
+  }, [token])
 
   const {
     register,

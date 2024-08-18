@@ -18,7 +18,7 @@ import NewArticleForm from '../NewArticleForm/NewArticleForm.js'
 const App = () => {
   const [current, setCurrent] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
-  const { slug, title, description, body, tagList, createdAt, favoritesCount, author } = useSelector(
+  const { slug, title, description, body, tagList, createdAt, favoritesCount, author, favorited } = useSelector(
     currentArticleSelectors.currentArticle
   )
   const { token } = useSelector(currentUserSelectors.currentUser)
@@ -33,7 +33,7 @@ const App = () => {
       <Header />
       {(pathname === '/' || pathname === '/articles') && (
         <>
-          {isLoading ? <Spin fullscreen={true} size="large" /> : <ArticlesList />}
+          {isLoading ? <Spin fullscreen={true} size="large" /> : <ArticlesList currentPage={current} />}
           <Pagination
             size="small"
             onChange={async (pageNumber) => {
@@ -66,6 +66,8 @@ const App = () => {
           favoritesCount={favoritesCount}
           slug={slug}
           title={title}
+          favorited={favorited}
+          currentPage={current}
           tagList={tagList}
         />
       )}
