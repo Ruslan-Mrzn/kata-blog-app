@@ -60,7 +60,6 @@ const NewArticleForm = () => {
             } catch (error) {
               error.json().then(({ errors }) => {
                 setServerErrors(errors)
-                console.log(serverErrors)
               })
             } finally {
               setIsLoading(false)

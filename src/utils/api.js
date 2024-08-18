@@ -12,7 +12,7 @@ class Api {
   }
 
   getArticles(pageNumber, token) {
-    return fetch(`${this._baseUrl}/articles?offset=${(pageNumber - 1) * 20} `, {
+    return fetch(`${this._baseUrl}/articles?limit=5&&offset=${(pageNumber - 1) * 5} `, {
       method: 'GET',
       headers: {
         ...this._headers,

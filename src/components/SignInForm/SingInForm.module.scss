@@ -91,7 +91,7 @@
     opacity: 0.7;
   }
   &:disabled {
-    background-color: gray;
+    background-color: var(--background-color-base);
     cursor: auto;
     &:hover {
       opacity: 1;

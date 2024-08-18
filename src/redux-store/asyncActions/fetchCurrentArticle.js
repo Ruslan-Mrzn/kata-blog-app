@@ -5,7 +5,6 @@ const fetchCurrentArticle = (slug, token) => {
   return async (dispatch) => {
     const { article } = await api.getSingleArticle(slug, token)
     dispatch(singleArticleActions.getSingleArticle(article))
-    console.log(article)
   }
 }
 

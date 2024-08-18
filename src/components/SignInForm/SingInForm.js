@@ -42,7 +42,6 @@ const SignInForm = () => {
               reset()
             } catch (error) {
               error.json().then(({ errors }) => setServerErrors(errors))
-              console.log(serverErrors)
             } finally {
               setIsLoading(false)
             }

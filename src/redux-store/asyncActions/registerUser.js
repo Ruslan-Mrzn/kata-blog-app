@@ -6,7 +6,6 @@ const registerUser = async (data) => {
   return async (dispatch) => {
     const { user } = await api.registerNewUser(username, email, password)
     dispatch(userActions.setUser(user))
-    console.log(user)
   }
 }
 

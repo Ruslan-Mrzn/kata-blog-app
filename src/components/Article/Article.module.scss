@@ -46,6 +46,13 @@
 .inactiveLike {
   @include like;
   background-image: url('./inactive-like.svg');
+
+  &:disabled {
+    cursor: auto;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 
 .activeLike {
@@ -237,8 +244,8 @@
   font-size: 14px;
   line-height: 157%;
   color: var(--text-color);
+  overflow-wrap: break-word;
   & * {
-    word-break: keep-all;
     text-wrap: pretty;
   }
   & p,

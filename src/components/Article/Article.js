@@ -31,6 +31,7 @@ const Article = ({
   const result = md.render(`${body}`)
   const { pathname } = useLocation()
   const history = useHistory()
+
   return (
     <article className={styles.article}>
       <div className={styles.main}>
@@ -46,14 +47,22 @@ const Article = ({
             className={favorited ? styles.activeLike : styles.inactiveLike}
             onClick={async () => {
               if (favorited && pathname === `/articles/${slug}`) {
-                const { article } = await api.dislikeArticle(slug, token)
-                dispatch(singleArticleActions.getSingleArticle(article))
-                dispatch(fetchArticles(currentPage, token))
+                try {
+                  const { article } = await api.dislikeArticle(slug, token)
+                  dispatch(singleArticleActions.getSingleArticle(article))
+                  dispatch(fetchArticles(currentPage, token))
+                } catch (err) {
+                  console.error(err)
+                }
               }
               if (!favorited && pathname === `/articles/${slug}`) {
-                const { article } = await api.likeArticle(slug, token)
-                dispatch(singleArticleActions.getSingleArticle(article))
-                dispatch(fetchArticles(currentPage, token))
+                try {
+                  const { article } = await api.likeArticle(slug, token)
+                  dispatch(singleArticleActions.getSingleArticle(article))
+                  dispatch(fetchArticles(currentPage, token))
+                } catch (err) {
+                  console.error(err)
+                }
               }
               if (favorited && pathname !== `/articles/${slug}`) {
                 await api.dislikeArticle(slug, token)
@@ -109,6 +118,19 @@ const Article = ({
                         await api.deleteArticle(slug, token)
                         dispatch(fetchArticles(undefined, token))
                         history.push('/')
+                        dispatch(
+                          singleArticleActions.getSingleArticle({
+                            slug: null,
+                            title: null,
+                            description: null,
+                            body: null,
+                            tags: [],
+                            createdAt: null,
+                            favoritesCount: null,
+                            favorited: null,
+                            author: null,
+                          })
+                        )
                       }}
                       className={styles.agreeButton}
                     >

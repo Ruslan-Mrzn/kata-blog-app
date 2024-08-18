@@ -28,7 +28,6 @@ const EditProfileForm = () => {
         <form
           className={styles.form}
           onSubmit={handleSubmit(async (data) => {
-            console.log(data)
             setIsLoading(true)
             try {
               const { user } = await api.editUserProfile(data, token)
@@ -38,7 +37,6 @@ const EditProfileForm = () => {
             } catch (error) {
               error.json().then(({ errors }) => {
                 setServerErrors(errors)
-                console.log(serverErrors)
               })
             } finally {
               setIsLoading(false)

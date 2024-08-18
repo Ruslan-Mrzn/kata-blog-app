@@ -31,7 +31,7 @@ const App = () => {
   return (
     <>
       <Header />
-      {(pathname === '/' || pathname === '/articles') && (
+      {(pathname === '/' || pathname === '/articles/' || pathname === '/articles') && (
         <>
           {isLoading ? <Spin fullscreen={true} size="large" /> : <ArticlesList currentPage={current} />}
           <Pagination
@@ -52,7 +52,7 @@ const App = () => {
             current={current}
             defaultCurrent={1}
             total={totalArticlesCount}
-            pageSize={20}
+            pageSize={5}
             showSizeChanger={false}
           />
         </>
