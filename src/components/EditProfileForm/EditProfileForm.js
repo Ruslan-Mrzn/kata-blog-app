@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom/cjs/react-router-dom.min'
 
 import api from '../../utils/api'
 import userActions from '../../redux-store/actions/userActions'
+import fetchArticles from '../../redux-store/asyncActions/fetchArticles'
 import { currentUserSelectors } from '../../redux-store/selectors'
 
 import styles from './EditProfileForm.module.scss'
@@ -33,6 +34,7 @@ const EditProfileForm = () => {
               const { user } = await api.editUserProfile(data, token)
               dispatch(userActions.setUser(user))
               sessionStorage.setItem('realWorldBlogUser', JSON.stringify(user))
+              dispatch(fetchArticles(undefined, token))
               reset()
             } catch (error) {
               error.json().then(({ errors }) => {
@@ -126,9 +128,9 @@ const EditProfileForm = () => {
                 placeholder="Avatar image"
                 defaultValue={image}
               />
-              {errors.image && errors.image.type === 'required' && <p>Password is required.</p>}
+              {errors.image && errors.image.type === 'required' && <p>URL is required.</p>}
 
-              {errors.image && <p>Please, input correct image url</p>}
+              {errors.image && errors.image.type === 'pattern' && <p>Please, input correct image url</p>}
               {serverErrors.image && <p>{serverErrors.image}</p>}
             </div>
           </div>
